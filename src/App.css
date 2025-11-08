@@ -1,8 +1,39 @@
-.App {
-  text-align: center;
+:root {
+    --wombat-light-background: #fef7e9;
+    --wombat-nose-dark: #34200b;
+}
+
+body {
+    position: relative;
+}
+
+#root {
+    height: 100vh;
+}
+
+.App-header,
+.App-footer,
+.App-main {
+    max-width: 1440px;
+    padding: 0 2rem;
+    margin: 0 auto;
+}
+
+.App-header {
+    background-color: var(--wombat-light-background);
 }
 
 .App-logo {
-    height: 50vh;
+    height: 10vh;
+}
+
+.App-main {
+    height: 85vh;
+    text-align: center;
+    padding: 1rem 2rem;
+}
+
+.App-footer {
+    height: 5vh;
 }
 

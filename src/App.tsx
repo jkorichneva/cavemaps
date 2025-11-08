@@ -1,13 +1,19 @@
-import React from 'react';
-import logo from './logo.png';
+import React, {Fragment} from 'react';
+import MapView from "./views/MapView";
 import './App.css';
+import Header from "./layout/Header/Header";
+import Footer from "./layout/Footer/Footer";
 
 function App() {
-  return (
-    <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
-    </div>
-  );
+    return (
+        <Fragment>
+            <Header />
+            <main className="App-main">
+                <MapView/>
+            </main>
+            <Footer />
+        </Fragment>
+    );
 }
 
 export default App;
