@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jkorichneva/cavemaps/refs/heads/main/src/logo.png" alt="CaveMaps logo" width="300">
+</p>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
