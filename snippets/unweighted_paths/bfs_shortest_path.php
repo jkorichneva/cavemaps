@@ -55,6 +55,9 @@ function shortest_path_bfs(string $source, string $destination, array $graph): a
 }
 
 function return_reversed_path(array $pathMap, string $destination): array {
+	if (count($pathMap) < 1) {
+		return [];
+	}
 	$path = [];
 	$node = $destination;
 
@@ -76,6 +79,6 @@ function print_shortest_path_bfs(array $reversedPath, array $pathMap, $destinati
 	echo $pathMap[$destination][1] . PHP_EOL;
 }
 
-$pathMap = shortest_path_bfs('A', 'F', $graph);
-$reversedPath = return_reversed_path($pathMap, 'F');
-print_shortest_path_bfs($reversedPath, $pathMap, 'F');
+#$pathMap = shortest_path_bfs('A', 'F', $graph);
+#$reversedPath = return_reversed_path($pathMap, 'F');
+#print_shortest_path_bfs($reversedPath, $pathMap, 'F');
