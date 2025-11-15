@@ -22,9 +22,10 @@ graph LR
 ## Test 3
 ```mermaid
 graph TD
-    A --> B
+    A --> X
     A --> C
     B --> D
+    X --> B
     C --> D
     D --> E
 ```
