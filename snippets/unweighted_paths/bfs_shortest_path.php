@@ -11,7 +11,7 @@ $graph = [
     'F' => ['C', 'E'],
 ];
 
-function shortest_path_bfs(string $source, string $destination, array $graph): void
+function shortest_path_bfs(string $source, string $destination, array $graph): array
 {
     $queue = [];
     $visited = [];
@@ -45,26 +45,37 @@ function shortest_path_bfs(string $source, string $destination, array $graph): v
 		    break;
 	    }
     }
-	echo 'Path and Costs Map ' . PHP_EOL;
-	print_r($pathMap);
-
-	$path = [];
-	$node = $destination;
 
 	if (!isset($pathMap[$destination])) {
 		echo 'No path was found!';
+		return [];
 	}
+
+	return $pathMap;
+}
+
+function return_reversed_path(array $pathMap, string $destination): array {
+	$path = [];
+	$node = $destination;
 
 	while ($node !== null) {
 		$path[] = $node;
 		$node = $pathMap[$node][0];
 	}
 
-	echo 'The shortest path is: ' . PHP_EOL;
-	echo implode(', ', array_reverse($path)) . PHP_EOL;
-	echo 'The total cost is: ' . PHP_EOL;
-	echo $pathMap[$destination][1] . PHP_EOL;
+	return array_reverse($path);
 }
 
 
-shortest_path_bfs('A', 'F', $graph);
+function print_shortest_path_bfs(array $reversedPath, array $pathMap, $destination): void
+{
+
+	echo 'The shortest path is: ';
+	echo implode(', ', $reversedPath) . PHP_EOL;
+	echo 'The total cost is: ';
+	echo $pathMap[$destination][1] . PHP_EOL;
+}
+
+$pathMap = shortest_path_bfs('A', 'F', $graph);
+$reversedPath = return_reversed_path($pathMap, 'F');
+print_shortest_path_bfs($reversedPath, $pathMap, 'F');
