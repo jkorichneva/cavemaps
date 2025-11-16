@@ -6,8 +6,10 @@ export default function MapView() {
     return (
         <div className="map-container">
             <AutocompleteInput />
-            <CaveMapsCanvas />
-            <AdjacencyTable />
+            <div className="map-main">
+                <CaveMapsCanvas />
+                <AdjacencyTable />
+            </div>
         </div>
     )
 }

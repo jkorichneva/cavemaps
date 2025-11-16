@@ -37,3 +37,8 @@ body {
     height: 5vh;
 }
 
+.map-main {
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+}

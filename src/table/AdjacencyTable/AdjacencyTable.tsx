@@ -1,5 +1,6 @@
 import sampleGraphs from "../../constants/sampleGraphs";
 import {useEffect, useState} from "react";
+import { TableBody, TableHead, TableCell, TableRow, Table } from '@mui/material';
 
 export default function AdjacencyTable() {
     const [headers, setHeaders] = useState<string[]>(['0']);
@@ -23,32 +24,31 @@ export default function AdjacencyTable() {
     }, []);
 
     return (
-        <table>
-            <thead>
-            <tr>
-                {headers.map(header => <th>{header}</th>)}
-            </tr>
-            </thead>
-            <tbody>
+        <Table sx={{ maxWidth: 300 }}>
+            <TableHead>
+            <TableRow>
+                {headers.map(header => <TableCell>{header}</TableCell>)}
+            </TableRow>
+            </TableHead>
+            <TableBody>
             {
                 tbody.map((row) => {
                     return (
-                        <tr>
+                        <TableRow>
                             {
                                 row.map((td) => {
                                     return (
-                                        <td>
+                                        <TableCell>
                                             {td}
-                                        </td>
+                                        </TableCell>
                                     )
                                 })
                             }
-                        </tr>
+                        </TableRow>
                     )
                 })
             }
-            </tbody>
-
-        </table>
+            </TableBody>
+        </Table>
     )
 }
