@@ -19,6 +19,7 @@ function shortest_path_bfs(string $source, string $destination, array $graph): a
 	$queue[] = [$source, null];
 
 	$pathMap = [];
+	$pathMap[$source] = [null, null];
 
     while (!empty($queue)) {
 
@@ -28,7 +29,7 @@ function shortest_path_bfs(string $source, string $destination, array $graph): a
 
 		foreach ($graph[$currentNode] as $neighbor) {
 			// add the current path with cost to the map
-			if (!array_key_exists($currentNode, $pathMap)) {
+			if ($currentNode !== $source && !array_key_exists($currentNode, $pathMap)) {
 				$cost = $pathMap[$parentNode][1] ?? 0;
 				$cost++;
 				$pathMap[$currentNode][0] = $parentNode;
@@ -79,6 +80,9 @@ function print_shortest_path_bfs(array $reversedPath, array $pathMap, $destinati
 	echo $pathMap[$destination][1] . PHP_EOL;
 }
 
-#$pathMap = shortest_path_bfs('A', 'F', $graph);
-#$reversedPath = return_reversed_path($pathMap, 'F');
-#print_shortest_path_bfs($reversedPath, $pathMap, 'F');
+$source = 'A';
+$destination = 'F';
+
+$pathMap = shortest_path_bfs($source, $destination, $graph);
+$reversedPath = return_reversed_path($pathMap, $destination);
+print_shortest_path_bfs($reversedPath, $pathMap, $destination);
