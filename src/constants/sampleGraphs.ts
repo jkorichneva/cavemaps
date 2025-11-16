@@ -1,4 +1,4 @@
-export default {
+export const unweightedGraph = {
     'A': ['B', 'C'],
     'B': ['A', 'D', 'E'],
     'C': ['A', 'F'],

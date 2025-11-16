@@ -1,56 +1,53 @@
-import sampleGraphs from "../constants/sampleGraphs";
-import {fireChangeForInputTimeIfValid} from "@testing-library/user-event/dist/keyboard/shared";
+import {Graph} from "../types/graph";
 
-type DestinationMap = { [key: string]: { destination: string, cost: number} };
+type DestinationMap = { [key: string]: { destination?: string, cost?: number } };
 
-export default function findShortestWay(from: string, to: string): { resultPath: string[], cost: number} {
-    const destinationMap: DestinationMap = {};
-    const queue = [from];
+export default function findShortestWay(from: string, to: string, graph: Graph): {
+    resultPath: string[],
+    cost: number
+} {
+    const destinationMap: DestinationMap = {
+        [from]: { destination: undefined, cost: undefined },
+    };
+    const queue: (string | undefined)[][] = [[from, undefined]];
+    const visited: string[] = [];
 
     while (queue.length) {
-        const current = queue.shift();
-        console.log(`-----Starting with vertice ${current}-------`)
-        if (!current) {
+        const currentPair = queue.shift();
+        if (!currentPair) {
             break;
         }
-        const neighbours = sampleGraphs[current as keyof typeof sampleGraphs];
-        console.log('neighbours', neighbours);
-        const pathExistsAlready = destinationMap[neighbours[0]] && destinationMap[neighbours[0]].destination === current;
-        console.log('pathExistsAlready', pathExistsAlready);
-        const firstNeighbour = pathExistsAlready
-            ? neighbours[1] : neighbours[0];
-        console.log(firstNeighbour);
-        const firstNeighbourIsFrom = firstNeighbour === from || current === from;
-        const previousStepKey = Object.keys(destinationMap).find(key  => destinationMap[key].destination === current);
-        let previousStep = previousStepKey ? destinationMap[previousStepKey] : null;
-        if (!previousStep) {
-            previousStep = destinationMap[firstNeighbour];
+        const currentVertice = currentPair[0];
+        const parentVertice = currentPair[1];
+        if (!currentVertice) {
+            break;
         }
-        console.log('previousStep', previousStep);
-        const prevStepCost = previousStep ? previousStep.cost + 1 : 1;
-        const cost = firstNeighbourIsFrom ? 1 : prevStepCost;
-        console.log(cost);
-        destinationMap[current] = { destination: firstNeighbour, cost };
+        const neighbours = graph[currentVertice as keyof typeof graph];
         neighbours.forEach(neighbour => {
-            if (!destinationMap[neighbour]) {
-                queue.push(neighbour);
+            if (currentVertice !== from && !destinationMap[currentVertice]) {
+                let cost = (parentVertice && destinationMap[parentVertice]?.cost
+                    ? destinationMap[parentVertice]?.cost : 0) as number;
+                cost++;
+                destinationMap[currentVertice] = { destination: parentVertice, cost};
+            }
+
+            if (!visited.includes(neighbour)) {
+                visited.push(neighbour);
+                queue.push([neighbour, currentVertice]);
             }
         });
-    }
 
-    console.log(destinationMap);
+        if (currentVertice === to) {
+            break;
+        }
+    }
 
     let current = to;
     const resultPath = [];
     while (current !== from) {
         resultPath.push(current);
-        const prevStepKey = Object.keys(destinationMap).find(key  => destinationMap[key].destination === current && key === from);
-        if (prevStepKey) {
-            current = prevStepKey;
-        } else {
-            current = destinationMap[current].destination;
-        }
+        current = destinationMap[current].destination as string;
     }
     resultPath.push(from);
-    return { resultPath: resultPath.reverse(), cost: destinationMap[to].cost };
+    return {resultPath: resultPath.reverse(), cost: destinationMap[to].cost as number};
 }
